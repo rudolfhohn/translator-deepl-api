@@ -35,8 +35,13 @@ def processRequest(req):
     if req.get("result").get("metadata").get("intentName") != "translateText":
         return {}
 
-    text = req.get('result').get('parameters').get('text')
-    translation = pydeepl.translate(text, 'FR')
+    param = req.get('result').get('parameters')
+    text = param.get('text')
+    lang = param.get('lang')
+    if lang is None:
+        lang = 'FR'
+
+    translation = pydeepl.translate(text, lang)
     return {
         "speech": translation,
         "displayText": translation,
