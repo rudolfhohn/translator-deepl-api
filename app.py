@@ -1,7 +1,3 @@
-from flask import Flask
-from datetime import datetime
-app = Flask(__name__)
-
 import pydeepl
 
 from urllib.parse import urlparse, urlencode
@@ -15,9 +11,7 @@ from flask import Flask
 from flask import request
 from flask import make_response
 
-# Flask app should start in global layout
 app = Flask(__name__)
-
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
@@ -29,7 +23,6 @@ def webhook():
     r = make_response(res)
     r.headers['Content-Type'] = 'application/json'
     return r
-
 
 def processRequest(req):
     if req.get("result").get("metadata").get("intentName") != "translateText":
@@ -50,7 +43,4 @@ def processRequest(req):
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
-
-    print("Starting app on port %d" % port)
-
     app.run(debug=False, port=port, host='0.0.0.0')
