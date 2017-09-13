@@ -38,7 +38,7 @@ def processRequest(req):
     param = req.get('result').get('parameters')
     text = param.get('text')
     lang = param.get('lang')
-    if lang is None:
+    if lang == '':
         lang = 'FR'
 
     translation = pydeepl.translate(text, lang)
